@@ -1,9 +1,8 @@
 #
-# Author:: Marius Ducea (marius@promethost.com)
 # Cookbook Name:: nodejs
-# Recipe:: default
+# Attributes:: windows
 #
-# Copyright 2010-2012, Promet Solutions
+# Copyright 2013, Daptiv Software Solutions, LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -17,13 +16,9 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-case node['platform_family']
-  when "debian"
-    include_recipe "apt"
-  when "windows"
-    #only install_from_package currently supports windows install
-    include_recipe "nodejs::install_from_package"
-    return
-end
 
-include_recipe "nodejs::install_from_#{node['nodejs']['install_method']}"
+default['nodejs']['windows']['download_base_url'] = 'http://nodejs.org/dist'
+default['nodejs']['windows']['package_name'] = 'Node.js'
+default['nodejs']['windows']['version'] = '0.11.2'
+default['nodejs']['windows']['checksum_x64'] = '7caabd3a774c96a8126f10d2e184727bd5160526'
+default['nodejs']['windows']['checksum_x86'] = '76421e22cff4d4f4d1cb2ce3e3566e2c9004cdee'
