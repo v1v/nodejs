@@ -39,6 +39,26 @@ case node['platform_family']
     end
   when 'smartos'
     packages = %w{ nodejs }
+  when 'windows'
+    os_architecture = node['kernel']['os_architecture'] == '64-bit' ? 'x64' : 'x86'
+    version = node['nodejs']['version']
+    url = node['nodejs']['windows_download_base_url']
+    
+    if (node['kernel']['os_architecture'] == '64-bit')
+      url += "/v#{version}/x64/node-v#{version}-x64.msi"
+    else
+      url += "/v#{version}/node-v#{version}-x86.msi"
+    end
+    
+    windows_package node['nodejs']['windows_package_name'] do
+      source url
+      checksum node['nodejs']['checksum']
+      installer_type :msi
+      action :install
+    end    
+    
+    #end of windows installation. return so we don't try and re-enter linux installation
+    return
   else
     Chef::Log.error "There are no nodejs packages for this platform; please use the source or binary method to install node"
     return
