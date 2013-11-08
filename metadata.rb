@@ -18,5 +18,5 @@ depends 'apt'
 depends 'windows'
 
 %w{ debian ubuntu centos redhat smartos windows }.each do |os|
-    supports os
+  supports os
 end

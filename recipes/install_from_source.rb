@@ -21,10 +21,10 @@
 include_recipe 'build-essential'
 
 case node['platform_family']
-  when 'rhel','fedora'
-    package 'openssl-devel'
-  when 'debian'
-    package 'libssl-dev'
+when 'rhel', 'fedora'
+  package 'openssl-devel'
+when 'debian'
+  package 'libssl-dev'
 end
 
 nodejs_tar = "node-v#{node['nodejs']['version']}.tar.gz"
@@ -61,8 +61,8 @@ bash "compile node.js (on #{node['nodejs']['make_threads']} cpu)" do
 end
 
 execute 'nodejs make install' do
-  environment({'PATH' => '/usr/local/bin:/usr/bin:/bin:$PATH'})
+  environment({ 'PATH' => '/usr/local/bin:/usr/bin:/bin:$PATH' })
   command 'make install'
   cwd "/usr/local/src/node-v#{node['nodejs']['version']}"
-  not_if {::File.exists?("#{node['nodejs']['dir']}/bin/node") && `#{node['nodejs']['dir']}/bin/node --version`.chomp == "v#{node['nodejs']['version']}" }
+  not_if { ::File.exists?("#{node['nodejs']['dir']}/bin/node") && `#{node['nodejs']['dir']}/bin/node --version`.chomp == "v#{node['nodejs']['version']}" }
 end
