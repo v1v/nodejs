@@ -46,7 +46,9 @@ end
 # Where we will install the binaries and libs to (normally /usr/local):
 destination_dir = node['nodejs']['dir']
 
-install_not_needed = File.exists?("#{node['nodejs']['dir']}/bin/node") && `#{node['nodejs']['dir']}/bin/node --version`.chomp == "v#{node['nodejs']['version']}"
+install_not_needed =
+  File.exists?("#{node['nodejs']['dir']}/bin/node") &&
+  `#{node['nodejs']['dir']}/bin/node --version`.chomp == "v#{node['nodejs']['version']}"
 
 # Verify the SHA sum of the downloaded file:
 ruby_block 'verify_sha_sum' do
@@ -54,7 +56,9 @@ ruby_block 'verify_sha_sum' do
     require 'digest/sha1'
     calculated_sha256_hash = Digest::SHA256.file("/usr/local/src/#{nodejs_tar}")
     if calculated_sha256_hash != expected_checksum
-      raise "SHA256 Hash of #{nodejs_tar} did not match!  Expected #{expected_checksum} found #{calculated_sha256_hash}"
+      raise
+      "SHA256 Hash of #{nodejs_tar} did not match! " +
+        " Expected #{expected_checksum} found #{calculated_sha256_hash}"
     end
   end
   not_if { install_not_needed }
