@@ -42,14 +42,14 @@ case node['platform_family']
     packages = %w{ nodejs }
   when 'windows'
     os_architecture = node['kernel']['os_architecture'] == '64-bit' ? 'x64' : 'x86'
-    version = node['nodejs']['windows']['version']
+    nodejs_version = node['nodejs']['version']
     checksum = node['nodejs']['windows']["checksum_#{os_architecture}"]
     url = node['nodejs']['windows']['download_base_url']
     
     if (os_architecture == 'x64')
-      url += "/v#{version}/x64/node-v#{version}-x64.msi"
+      url += "/v#{nodejs_version}/x64/node-v#{nodejs_version}-x64.msi"
     else
-      url += "/v#{version}/node-v#{version}-x86.msi"
+      url += "/v#{nodejs_version}/node-v#{nodejs_version}-x86.msi"
     end
     
     windows_package node['nodejs']['windows']['package_name'] do
@@ -57,6 +57,7 @@ case node['platform_family']
       checksum checksum
       installer_type :msi
       action :install
+      version nodejs_version
     end    
     
     #end of windows installation. return so we don't try and re-enter linux installation
