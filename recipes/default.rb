@@ -18,11 +18,11 @@
 # limitations under the License.
 #
 case node['platform_family']
-  when "debian"
-    include_recipe "apt"
-  when "windows"
+  when 'debian'
+    include_recipe 'apt'
+  when 'windows'
     #only install_from_package currently supports windows install
-    include_recipe "nodejs::install_from_package"
+    include_recipe 'nodejs::install_from_package'
     return
 end
 

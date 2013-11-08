@@ -18,15 +18,15 @@
 # limitations under the License.
 #
 
-include_recipe "nodejs"
+include_recipe 'nodejs'
 
-package "curl"
+package 'curl'
 
 npm_src_url = "http://registry.npmjs.org/npm/-/npm-#{node['nodejs']['npm']}.tgz"
 
-bash "install npm - package manager for node" do
-  cwd "/usr/local/src"
-  user "root"
+bash 'install npm - package manager for node' do
+  cwd '/usr/local/src'
+  user 'root'
   code <<-EOH
     mkdir -p npm-v#{node['nodejs']['npm']} && \
     cd npm-v#{node['nodejs']['npm']}

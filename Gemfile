@@ -8,6 +8,5 @@ gem 'rake'
 gem 'berkshelf'
 gem 'minitest-chef-handler'
 gem 'daptiv-chef-ci', '>= 0.0.8'
-gem 'test-kitchen', '~> 1.0.0.alpha.1'
-gem 'kitchen-vagrant', '~> 0.7.2'
+
 

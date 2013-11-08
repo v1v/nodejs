@@ -34,8 +34,8 @@ case node['platform_family']
       uri repo
       distribution node['lsb']['codename']
       components ['main']
-      keyserver "keyserver.ubuntu.com"
-      key "C7917B12"
+      keyserver 'keyserver.ubuntu.com'
+      key 'C7917B12'
       action :add
     end
   when 'smartos'
@@ -63,7 +63,7 @@ case node['platform_family']
     #end of windows installation. return so we don't try and re-enter linux installation
     return
   else
-    Chef::Log.error "There are no nodejs packages for this platform; please use the source or binary method to install node"
+    Chef::Log.error 'There are no nodejs packages for this platform; please use the source or binary method to install node'
     return
 end
 
