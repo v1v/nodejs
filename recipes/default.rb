@@ -23,7 +23,6 @@ when 'debian'
 when 'windows'
   #only install_from_package currently supports windows install
   include_recipe 'nodejs::install_from_package'
-  return
 end
 
 include_recipe "nodejs::install_from_#{node['nodejs']['install_method']}"
