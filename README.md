@@ -57,6 +57,10 @@ Include the npm recipe to install npm:
 
 *  include_recipe "nodejs::npm"
 
+Running vagrant up requires vagrant plus prerelease version of the vagrant-windows plugin 1.3.0.pre.3+
+It can be installed by running this command:
+vagrant plugin install vagrant-windows --plugin-version 1.3.0.pre.3 --plugin-prerelease --plugin-source https://rubygems.org
+
 LICENSE and AUTHOR
 ==================
 

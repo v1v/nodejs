@@ -17,13 +17,11 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-case node['platform_family']
-  when "debian"
-    include_recipe "apt"
-  when "windows"
-    #only install_from_package currently supports windows install
-    include_recipe "nodejs::install_from_package"
-    return
-end
 
-include_recipe "nodejs::install_from_#{node['nodejs']['install_method']}"
+if platform?('windows')
+  # Windows only supports install from package method
+  include_recipe 'nodejs::windows'
+else
+  include_recipe "apt" if platform_family('debian')
+  include_recipe "nodejs::install_from_#{node['nodejs']['install_method']}"
+end

@@ -19,6 +19,5 @@
 
 default['nodejs']['windows']['download_base_url'] = 'http://nodejs.org/dist'
 default['nodejs']['windows']['package_name'] = 'Node.js'
-default['nodejs']['windows']['version'] = '0.11.2'
 default['nodejs']['windows']['checksum_x64'] = '7caabd3a774c96a8126f10d2e184727bd5160526'
 default['nodejs']['windows']['checksum_x86'] = '76421e22cff4d4f4d1cb2ce3e3566e2c9004cdee'
