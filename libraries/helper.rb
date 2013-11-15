@@ -20,17 +20,18 @@
 
 require 'chef/mixin/shell_out'
 
-module NodeJs
-  class Helper
+module NodejsCookbook
+  module Helper
     extend Chef::Mixin::ShellOut
 
-    def self.installed_version()
+    def installed_version()
       version = '0.0.0'
       node_exe = "#{node['nodejs']['dir']}/bin/node"
       if File.exists?(node_exe)
         cmd = shell_out("#{node_exe} --version")
         version = cmd.stdout.chomp
       end
+      Chef::Log.debug("Found NodeJS installed version: #{version}")
       version
     end
 

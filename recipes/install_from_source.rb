@@ -18,6 +18,8 @@
 # limitations under the License.
 #
 
+::Chef::Recipe.send(:include, NodejsCookbook::Helper)
+
 include_recipe 'build-essential'
 
 case node['platform_family']
@@ -60,9 +62,11 @@ bash "compile node.js (on #{node['nodejs']['make_threads']} cpu)" do
   creates "/usr/local/src/node-v#{node['nodejs']['version']}/node"
 end
 
+install_needed = installed_version() != "v#{node['nodejs']['version']}"
+
 execute 'nodejs make install' do
   environment({ 'PATH' => '/usr/local/bin:/usr/bin:/bin:$PATH' })
   command 'make install'
   cwd "/usr/local/src/node-v#{node['nodejs']['version']}"
-  not_if { NodeJs::Helper.installed_version() == "v#{node['nodejs']['version']}" }
+  only_if { install_needed }
 end

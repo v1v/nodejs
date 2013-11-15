@@ -16,6 +16,7 @@
 # limitations under the License.
 #
 
+::Chef::Recipe.send(:include, NodejsCookbook::Helper)
 
 # Shamelessly borrowed from http://docs.opscode.com/dsl_recipe_method_platform.html
 # Surely there's a more canonical way to get arch?
@@ -45,7 +46,7 @@ end
 
 # Where we will install the binaries and libs to (normally /usr/local):
 destination_dir = node['nodejs']['dir']
-install_needed = NodeJs::Helper.installed_version() != "v#{node['nodejs']['version']}"
+install_needed = installed_version() != "v#{node['nodejs']['version']}"
 
 # Verify the SHA sum of the downloaded file:
 ruby_block 'verify_sha_sum' do

@@ -40,28 +40,6 @@ when 'debian'
   end
 when 'smartos'
   packages = %w{ nodejs }
-when 'windows'
-  os_architecture = node['kernel']['os_architecture'] == '64-bit' ? 'x64' : 'x86'
-  nodejs_version = node['nodejs']['version']
-  checksum = node['nodejs']['windows']["checksum_#{os_architecture}"]
-  url = node['nodejs']['windows']['download_base_url']
-
-  if (os_architecture == 'x64')
-    url += "/v#{nodejs_version}/x64/node-v#{nodejs_version}-x64.msi"
-  else
-    url += "/v#{nodejs_version}/node-v#{nodejs_version}-x86.msi"
-  end
-
-  windows_package node['nodejs']['windows']['package_name'] do
-    source url
-    checksum checksum
-    installer_type :msi
-    action :install
-    version nodejs_version
-  end
-
-  #end of windows installation. return so we don't try and re-enter linux installation
-  return
 else
   Chef::Log.error
   'There are no nodejs packages for this platform; '+
