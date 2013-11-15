@@ -45,10 +45,7 @@ end
 
 # Where we will install the binaries and libs to (normally /usr/local):
 destination_dir = node['nodejs']['dir']
-
-install_not_needed =
-  File.exists?("#{node['nodejs']['dir']}/bin/node") &&
-  `#{node['nodejs']['dir']}/bin/node --version`.chomp == "v#{node['nodejs']['version']}"
+install_needed = NodeJs::Helper.installed_version() != "v#{node['nodejs']['version']}"
 
 # Verify the SHA sum of the downloaded file:
 ruby_block 'verify_sha_sum' do
@@ -61,7 +58,7 @@ ruby_block 'verify_sha_sum' do
         " Expected #{expected_checksum} found #{calculated_sha256_hash}"
     end
   end
-  not_if { install_not_needed }
+  only_if { install_needed }
 end
 
 # One hopes that we can trust the contents of the node tarball not to overwrite anything it shouldn't!
@@ -75,5 +72,5 @@ execute 'install package to system' do
       #{package_stub}/share
   EOF
 
-  not_if { install_not_needed }
+  only_if { install_needed }
 end
