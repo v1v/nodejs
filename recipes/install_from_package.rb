@@ -1,7 +1,6 @@
 #
 # Author:: Nathan L Smith (nlloyds@gmail.com)
 # Author:: Marius Ducea (marius@promethost.com)
-# Author:: Mike Devine (mdevine@daptiv.com)
 # Cookbook Name:: nodejs
 # Recipe:: install_from_package
 #
@@ -38,12 +37,14 @@ when 'debian'
     key 'C7917B12'
     action :add
   end
+when 'rhel'
+  include_recipe 'yum::epel'
+  packages = %w{ nodejs nodejs-devel npm }
 when 'smartos'
   packages = %w{ nodejs }
 else
-  Chef::Log.error
-  'There are no nodejs packages for this platform; '+
-    'please use the source or binary method to install node'
+  Chef::Log.error 'There are no nodejs packages for this platform. ' +
+    'Please use the source or binary method to install node'
   return
 end
 
