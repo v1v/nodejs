@@ -3,6 +3,9 @@
     "nodejs": {
       "path": "."
     },
+    "yum": {
+      "locked_version": "2.4.2"
+    },
     "apt": {
       "locked_version": "1.7.0"
     },
