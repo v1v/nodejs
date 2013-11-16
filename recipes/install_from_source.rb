@@ -55,7 +55,7 @@ bash "compile node.js (on #{node['nodejs']['make_threads']} cpu)" do
   # OSX doesn't have the attribute so arbitrarily default 2
   cwd "/usr/local/src/node-v#{node['nodejs']['version']}"
   code <<-EOH
-    PATH="/usr/local/bin:$PATH"
+    PATH=/usr/local/bin:$PATH
     ./configure --prefix=#{node['nodejs']['dir']} && \
     make -j #{node['nodejs']['make_threads']}
   EOH
