@@ -18,7 +18,7 @@
 #
 
 default['nodejs']['install_method'] = 'source'
-default['nodejs']['version'] = '0.10.21'
+default['nodejs']['version'] = '0.10.22'
 default['nodejs']['checksum'] =
   '7e2079394efe82f62798178f617888c9d6a39150c76122c432ae9ea73ce28e79'
 default['nodejs']['checksum_linux_x64'] =
