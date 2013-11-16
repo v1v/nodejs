@@ -20,8 +20,13 @@
 
 # Shamelessly borrowed from http://docs.opscode.com/dsl_recipe_method_platform.html
 # Surely there's a more canonical way to get arch?
-arch = node['kernel']['machine'] =~ /x86_64/ ? 'x64' : 'x86'
-distro_suffix = '-linux-#{arch}'
+if node['kernel']['machine'] =~ /armv6l/
+  arch = 'arm-pi' # assume a raspberry pi
+else
+  arch = node['kernel']['machine'] =~ /x86_64/ ? 'x64' : 'x86'
+end
+
+distro_suffix = "-linux-#{arch}"
 
 # package_stub is for example: "node-v0.8.20-linux-x64"
 package_stub = "node-v#{node['nodejs']['version']}#{distro_suffix}"
@@ -46,7 +51,8 @@ end
 
 # Where we will install the binaries and libs to (normally /usr/local):
 destination_dir = node['nodejs']['dir']
-install_needed = installed_version() != "v#{node['nodejs']['version']}"
+
+install_not_needed = installed_version() == "v#{node['nodejs']['version']}"
 
 # Verify the SHA sum of the downloaded file:
 ruby_block 'verify_sha_sum' do
@@ -54,24 +60,23 @@ ruby_block 'verify_sha_sum' do
     require 'digest/sha1'
     calculated_sha256_hash = Digest::SHA256.file("/usr/local/src/#{nodejs_tar}")
     if calculated_sha256_hash != expected_checksum
-      raise
-      "SHA256 Hash of #{nodejs_tar} did not match! " +
-        " Expected #{expected_checksum} found #{calculated_sha256_hash}"
+      raise "SHA256 Hash of #{nodejs_tar} did not match!  " +
+        "Expected #{expected_checksum} found #{calculated_sha256_hash}"
     end
   end
-  only_if { install_needed }
+  not_if { !node['nodejs']['check_sha'] or install_not_needed }
 end
 
 # One hopes that we can trust the contents of the node tarball not to overwrite anything it shouldn't!
 execute 'install package to system' do
   command <<-EOF
-      tar xf /usr/local/src/#{nodejs_tar} \
-      --strip-components=1  --no-same-owner \
-      -C #{destination_dir} \
-      #{package_stub}/bin \
-      #{package_stub}/lib \
-      #{package_stub}/share
-  EOF
+            tar xf /usr/local/src/#{nodejs_tar} \
+            --strip-components=1  --no-same-owner \
+            -C #{destination_dir} \
+            #{package_stub}/bin \
+            #{package_stub}/lib \
+            #{package_stub}/share
+        EOF
 
-  only_if { install_needed }
+  not_if { install_not_needed }
 end

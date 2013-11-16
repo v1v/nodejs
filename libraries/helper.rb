@@ -18,18 +18,18 @@
 # limitations under the License.
 #
 
-require 'chef/mixin/shell_out'
+require 'mixlib/shellout'
 
 module NodejsCookbook
   module Helper
-    extend Chef::Mixin::ShellOut
 
     def installed_version()
       version = '0.0.0'
       node_exe = "#{node['nodejs']['dir']}/bin/node"
       if File.exists?(node_exe)
-        cmd = shell_out("#{node_exe} --version")
-        version = cmd.stdout.chomp
+        nodejs_cmd = Mixlib::ShellOut.new("#{node_exe} --version")
+        nodejs_cmd.run_command
+        version = nodejs_cmd.stdout.chomp
       end
       Chef::Log.debug("Found NodeJS installed version: #{version}")
       version

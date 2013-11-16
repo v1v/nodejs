@@ -22,6 +22,6 @@ if platform?('windows')
   # Windows only supports install from package method
   include_recipe 'nodejs::windows'
 else
-  include_recipe "apt" if platform_family('debian')
+  include_recipe 'apt' if platform_family?('debian')
   include_recipe "nodejs::install_from_#{node['nodejs']['install_method']}"
 end
