@@ -3,7 +3,7 @@
 DESCRIPTION
 ===========
 
-Installs Node.JS
+Installs Node.JS on Linux and Windows
 
 REQUIREMENTS
 ============
@@ -11,20 +11,22 @@ REQUIREMENTS
 
 ## Platform
 
-* Tested on Debian 6 and Ubuntu 10.04
+* Tested on Debian 6, Ubuntu 10.04 & 12.04 LTS, and Windows Server 2008 R2
 * Should work fine on Centos, RHEL, etc.
 
 ## Cookbooks:
 
 * build-essential
 * apt
+* windows
+* yum
 
 Opscode cookbooks (http://github.com/opscode/cookbooks/tree/master)
 
 ATTRIBUTES
 ==========
 
-* nodejs['install_method'] = source or package
+* nodejs['install_method'] = source or package (only used on Linux)
 * nodejs['version'] - release version of node to install
 * nodejs['src_url'] - download location for node source tarball
 * nodejs['dir'] - location where node will be installed, default /usr/local
