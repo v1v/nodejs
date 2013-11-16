@@ -1,14 +1,15 @@
 Vagrant.configure("2") do |config|
   config.berkshelf.enabled = true
-
-  config.windows.halt_timeout = 20
-  config.winrm.username = "vagrant"
-  config.winrm.password = "vagrant"
-
-  config.vm.box_url = 'http://vagrantboxes.hq.daptiv.com/vagrant/boxes/vagrant-windows2008r2.box'
-  config.vm.box = 'vagrant-windows2008r2'
-  config.vm.guest = :windows
-  config.vm.network :forwarded_port, guest: 5985, host: 5985
+  
+  if ENV['LINUX']
+    config.vm.box_url = 'https://opscode-vm.s3.amazonaws.com/vagrant/opscode_ubuntu-12.04_chef-11.2.0.box'
+    config.vm.box = 'opscode_ubuntu-12.04_chef-11.2.0'
+  else
+    config.vm.box_url = 'http://vagrantboxes.hq.daptiv.com/vagrant/boxes/vagrant-windows2008r2.box'
+    config.vm.box = 'vagrant-windows2008r2'
+    config.vm.guest = :windows
+    config.vm.network :forwarded_port, guest: 5985, host: 5985
+  end
 
   config.vm.provider "virtualbox" do |vb|
     vb.gui = true
@@ -18,5 +19,11 @@ Vagrant.configure("2") do |config|
     chef.log_level = :info
     chef.add_recipe 'nodejs'
     chef.add_recipe 'minitest-handler'
+    chef.json = {
+      "nodejs" => {
+        "install_method" => 'binary'
+      }
+    }
   end
+  
 end
