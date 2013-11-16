@@ -7,6 +7,6 @@ gem 'tailor'
 gem 'rake'
 gem 'berkshelf'
 gem 'minitest-chef-handler'
-gem 'daptiv-chef-ci', '>= 0.0.8'
+gem 'daptiv-chef-ci', '>= 0.0.12'
 
 
