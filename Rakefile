@@ -6,7 +6,7 @@ task :lint => [:build_number, :tailor, :foodcritic]
 task :default => [:lint]
 
 task :build_number do
-  IO.write('version.txt', (ENV['BUILD_NUMBER'] ? "0.0.#{ENV['BUILD_NUMBER']}" : '1.3.0'))
+  IO.write('version.txt', (ENV['BUILD_NUMBER'] ? "1.3.#{ENV['BUILD_NUMBER']}" : '1.3.0'))
 end
 
 FoodCritic::Rake::LintTask.new do |t|
