@@ -8,7 +8,15 @@ class TestNodeJsInstall < MiniTest::Chef::Spec
       nodejs_cmd = Mixlib::ShellOut.new(cmd)
       nodejs_cmd.run_command
       result = nodejs_cmd.stdout.chomp
-      assert_includes result, node['nodejs']['version']
+
+      # Ensure we got something
+      refute_empty result
+
+      # Package installation are at the mercy of the distro package mgr
+      if node['nodejs']['install_method'] == 'source'
+        assert_includes result, node['nodejs']['version']
+      end
+
     end
   end
 end
