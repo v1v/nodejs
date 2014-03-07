@@ -3,7 +3,7 @@
 # Cookbook Name:: nodejs-cookbook
 # Library:: nodejsversion
 #
-# Copyright:: Copyright (c) 2013 Daptiv Solutions LLC
+# Copyright:: Copyright (c) 2013-2014 Daptiv Solutions LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -25,13 +25,13 @@ module NodejsCookbook
 
     def installed_version()
       version = '0.0.0'
-      node_exe = "#{node['nodejs']['dir']}/bin/node"
+      node_exe = ::File.join(node['nodejs']['bin_dir'], 'node')
       if File.exists?(node_exe)
         nodejs_cmd = Mixlib::ShellOut.new("#{node_exe} --version")
         nodejs_cmd.run_command
         version = nodejs_cmd.stdout.chomp
       end
-      Chef::Log.debug("Found NodeJS installed version: #{version}")
+      Chef::Log.info("Found NodeJS installed version: #{version}")
       version
     end
 
