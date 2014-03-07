@@ -1,9 +1,9 @@
 require 'tailor/rake_task'
 require 'foodcritic'
+require 'rspec/core/rake_task'
 require 'daptiv-chef-ci/vagrant_task'
 
-task :lint => [:build_number, :tailor, :foodcritic]
-task :default => [:lint]
+task :default => [:build_number, :tailor, :foodcritic, :spec]
 
 task :build_number do
   IO.write('version.txt', (ENV['BUILD_NUMBER'] ? "1.3.#{ENV['BUILD_NUMBER']}" : '1.3.0'))
@@ -13,6 +13,12 @@ FoodCritic::Rake::LintTask.new do |t|
   t.options = {
       :cookbook_paths => '.',
       :search_gems => true }
+end
+
+RSpec::Core::RakeTask.new do |task|
+  task.pattern = 'spec/**/*_spec.rb'
+  task.rspec_opts = ['--color', '-f documentation']
+  task.rspec_opts << '-tunit'
 end
 
 Tailor::RakeTask.new
