@@ -21,13 +21,24 @@
 require 'mixlib/shellout'
 
 module NodejsCookbook
-  module Helper
+  class Helper
 
+    # Create a new Helper object
+    #
+    # @param [Chef::node] The current Chef node
+    # @return [Helper] a class designed to help NodeJS recipes
+    def initialize(node)
+      @node = node
+    end
+
+    # Gets the installed NodeJS version, i.e. v0.10.26
+    #
+    # @return [String] The raw --version output from the command line
     def installed_version()
       version = '0.0.0'
-      node_exe = ::File.join(node['nodejs']['bin_dir'], 'node')
-      if File.exists?(node_exe)
-        nodejs_cmd = Mixlib::ShellOut.new("#{node_exe} --version")
+      node_exe = ::File.join(@node['nodejs']['bin_dir'], 'node')
+      if ::File.exists?(node_exe)
+        nodejs_cmd = Mixlib::ShellOut.new("\"#{node_exe}\" --version")
         nodejs_cmd.run_command
         version = nodejs_cmd.stdout.chomp
       end

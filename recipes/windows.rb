@@ -18,9 +18,10 @@
 # limitations under the License.
 #
 
-::Chef::Recipe.send(:include, NodejsCookbook::Helper)
+require ::File.join(::File.dirname(__FILE__), '..', 'libraries', 'helper')
+helper = NodejsCookbook::Helper.new(node)
 
-installed_version = installed_version()
+installed_version = helper.installed_version()
 arch = node['kernel']['machine'] =~ /x86_64/ ? 'x64' : 'x86'
 
 windows_package node['nodejs']['package_name'] do

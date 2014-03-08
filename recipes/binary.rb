@@ -16,7 +16,8 @@
 # limitations under the License.
 #
 
-::Chef::Recipe.send(:include, NodejsCookbook::Helper)
+require ::File.join(::File.dirname(__FILE__), '..', 'libraries', 'helper')
+helper = NodejsCookbook::Helper.new(node)
 
 arch = node['kernel']['machine'] =~ /x86_64/ ? 'x64' : 'x86'
 distro_suffix = "-linux-#{arch}"
@@ -45,7 +46,7 @@ end
 # Where we will install the binaries and libs to (normally /usr/local):
 destination_dir = node['nodejs']['dir']
 
-install_not_needed = installed_version() == "v#{node['nodejs']['version']}"
+install_not_needed = helper.installed_version() == "v#{node['nodejs']['version']}"
 
 # Verify the SHA sum of the downloaded file:
 ruby_block 'verify_sha_sum' do

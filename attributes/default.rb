@@ -41,7 +41,7 @@ default['nodejs']['msi_url_x86'] = node['nodejs']['src_url'] +
 
 if platform?('windows')
   default['nodejs']['install_method'] = 'windows'
-  default['nodejs']['dir'] = ::File.join(ENV['ProgramFiles'], 'nodejs')
+  default['nodejs']['dir'] = ::File.join('c:', 'Program Files', 'nodejs')
   default['nodejs']['bin_dir'] = node['nodejs']['dir']
 else
   default['nodejs']['install_method'] = 'source'

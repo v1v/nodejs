@@ -17,10 +17,4 @@ RSpec.configure do |config|
   # the seed, which is printed after each run.
   #     --seed 1234
   config.order = 'random'
-
-  config.before(:each) do
-    # Set some common global ENV vars used by Windows cookbooks
-    ENV['ProgramFiles(x86)'] = 'C:\Program Files (x86)'
-    ENV['ProgramFiles'] = 'C:\Program Files'
-  end
 end

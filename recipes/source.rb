@@ -18,7 +18,8 @@
 # limitations under the License.
 #
 
-::Chef::Recipe.send(:include, NodejsCookbook::Helper)
+require ::File.join(::File.dirname(__FILE__), '..', 'libraries', 'helper')
+helper = NodejsCookbook::Helper.new(node)
 
 include_recipe 'build-essential'
 
@@ -62,7 +63,7 @@ bash "compile node.js (on #{node['nodejs']['make_threads']} cpu)" do
   creates "/usr/local/src/node-v#{node['nodejs']['version']}/node"
 end
 
-install_needed = installed_version() != "v#{node['nodejs']['version']}"
+install_needed = helper.installed_version() != "v#{node['nodejs']['version']}"
 
 execute 'nodejs make install' do
   environment({ 'PATH' => '/usr/local/bin:/usr/bin:/bin:$PATH' })
