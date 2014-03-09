@@ -46,7 +46,12 @@ if platform?('windows')
 else
   default['nodejs']['install_method'] = 'source'
   default['nodejs']['dir'] = '/usr/local'
-  default['nodejs']['bin_dir'] = ::File.join(node['nodejs']['dir'], 'bin')
+
+  if node['nodejs']['install_method'] == 'package'
+    default['nodejs']['bin_dir'] = '/usr/bin'
+  else
+    default['nodejs']['bin_dir'] = ::File.join(node['nodejs']['dir'], 'bin')
+  end
 end
 
 # Used when compiling from source on Linux
