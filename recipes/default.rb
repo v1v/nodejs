@@ -1,9 +1,11 @@
 #
 # Author:: Marius Ducea (marius@promethost.com)
+#          Shawn Neal (sneal@daptiv.com)
 # Cookbook Name:: nodejs
 # Recipe:: default
 #
 # Copyright 2010-2012, Promet Solutions
+# Copyright 2013-2014, Daptiv Solutions LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -18,10 +20,5 @@
 # limitations under the License.
 #
 
-if platform?('windows')
-  # Windows only supports install from package method
-  include_recipe 'nodejs::windows'
-else
-  include_recipe 'apt' if platform_family?('debian')
-  include_recipe "nodejs::install_from_#{node['nodejs']['install_method']}"
-end
+include_recipe 'apt' if platform_family?('debian')
+include_recipe "nodejs::#{node['nodejs']['install_method']}"

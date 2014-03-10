@@ -4,7 +4,7 @@
       "path": "."
     },
     "yum": {
-      "locked_version": "2.4.2"
+      "locked_version": "3.0.6"
     },
     "apt": {
       "locked_version": "1.7.0"
@@ -13,9 +13,9 @@
       "locked_version": "1.4.2"
     },
     "windows": {
-      "locked_version": "1.10.1",
-      "git": "git://github.com/opscode-cookbooks/windows.git",
-      "ref": "4285af3627d2f42562e8d86c9ea02dff01449f1d"
+      "locked_version": "1.30.1",
+      "git": "git://github.com/daptiv/windows.git",
+      "ref": "d13c4e49dda627691e978ca1beebad3411701adb"
     },
     "minitest-handler": {
       "locked_version": "0.1.3",

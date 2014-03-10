@@ -40,20 +40,20 @@ Include the nodejs recipe to install node on your system based on the default in
 
 *  include_recipe "nodejs"
 
-Include the install_from_source recipe to install node from sources:
+Include the source recipe to install node from sources:
 
-*  include_recipe "nodejs::install_from_source"
+*  include_recipe "nodejs::source"
 
-Include the install_from_package recipe to install node from packages:
+Include the package recipe to install node from packages:
 Note that only apt (Ubuntu, Debian) appears to have up to date packages available.
-Centos, RHEL, etc are non-functional. (Try install_from_binary for those)
+Centos, RHEL, etc are non-functional. (Try binary for those)
 
-*  include_recipe "nodejs::install_from_package"
+*  include_recipe "nodejs::package"
 
-Include the install_from_binary recipe to install node from official prebuilt binaries:
+Include the binary recipe to install node from official prebuilt binaries:
 (Currently Linux x86, x86_64 only)
 
-*  include_recipe "nodejs::install_from_binary"
+*  include_recipe "nodejs::binary"
 
 Include the npm recipe to install npm:
 

@@ -10,9 +10,9 @@ provides         'nodejs'
 
 recipe 'nodejs', 'Installs Node.JS based on the default installation method'
 recipe 'nodejs::windows', 'Installs Node.JS on Windows using the standard installer'
-recipe 'nodejs::install_from_source', 'Installs Node.JS from source'
-recipe 'nodejs::install_from_binary', 'Installs Node.JS from official binaries'
-recipe 'nodejs::install_from_package', 'Installs Node.JS from packages; supports windows'
+recipe 'nodejs::source', 'Installs Node.JS from source'
+recipe 'nodejs::binary', 'Installs Node.JS from official binaries'
+recipe 'nodejs::package', 'Installs Node.JS from packages'
 recipe 'nodejs::npm', 'Installs npm from source - a package manager for node'
 
 %w{ apt yum build-essential windows }.each do |c|

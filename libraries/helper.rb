@@ -3,7 +3,7 @@
 # Cookbook Name:: nodejs-cookbook
 # Library:: nodejsversion
 #
-# Copyright:: Copyright (c) 2013 Daptiv Solutions LLC
+# Copyright:: Copyright (c) 2013-2014 Daptiv Solutions LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -21,17 +21,28 @@
 require 'mixlib/shellout'
 
 module NodejsCookbook
-  module Helper
+  class Helper
 
+    # Create a new Helper object
+    #
+    # @param [Chef::node] The current Chef node
+    # @return [Helper] a class designed to help NodeJS recipes
+    def initialize(node)
+      @node = node
+    end
+
+    # Gets the installed NodeJS version, i.e. v0.10.26
+    #
+    # @return [String] The raw --version output from the command line
     def installed_version()
       version = '0.0.0'
-      node_exe = "#{node['nodejs']['dir']}/bin/node"
-      if File.exists?(node_exe)
-        nodejs_cmd = Mixlib::ShellOut.new("#{node_exe} --version")
+      node_exe = ::File.join(@node['nodejs']['bin_dir'], 'node')
+      if ::File.exists?(node_exe)
+        nodejs_cmd = Mixlib::ShellOut.new("\"#{node_exe}\" --version")
         nodejs_cmd.run_command
         version = nodejs_cmd.stdout.chomp
       end
-      Chef::Log.debug("Found NodeJS installed version: #{version}")
+      Chef::Log.info("Found NodeJS installed version: #{version}")
       version
     end
 
