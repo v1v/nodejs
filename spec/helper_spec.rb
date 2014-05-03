@@ -6,13 +6,14 @@ describe NodejsCookbook::Helper do
   let(:shellout) { double('shellout') }
 
   let(:node) do
-    { 'nodejs' => { 'bin_dir' => ::File.join('c:', 'Program Files', 'nodejs') } }
+    { 'nodejs' => { 'bin_dir' => ::File.join('c:', 'Program Files', 'nodejs') },
+      'platform' => 'windows' }
   end
 
   let(:helper) { NodejsCookbook::Helper.new(node) }
 
   it 'should check installed nodejs version' do
-    node_path = 'c:/Program Files/nodejs/node'
+    node_path = 'c:/Program Files/nodejs/node.exe'
     Mixlib::ShellOut.should_receive(:new).with("\"#{node_path}\" --version").
       and_return(shellout)
     shellout.should_receive(:run_command)
