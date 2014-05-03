@@ -36,7 +36,11 @@ module NodejsCookbook
     # @return [String] The raw --version output from the command line
     def installed_version()
       version = '0.0.0'
-      node_exe = ::File.join(@node['nodejs']['bin_dir'], 'node.exe')
+      if @node['platform'] == 'windows'
+        node_exe = ::File.join(@node['nodejs']['bin_dir'], 'node.exe')
+      else
+        node_exe = ::File.join(@node['nodejs']['bin_dir'], 'node')
+      end
       if ::File.exists?(node_exe)
         nodejs_cmd = Mixlib::ShellOut.new("\"#{node_exe}\" --version")
         nodejs_cmd.run_command
