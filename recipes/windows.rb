@@ -30,5 +30,7 @@ windows_package node['nodejs']['package_name'] do
   installer_type :msi
   action :install
   version node['nodejs']['version']
+  options node['nodejs']['options']
+  timeout node['nodejs']['installer_timeout']
   not_if { installed_version == "v#{node['nodejs']['version']}" }
 end
