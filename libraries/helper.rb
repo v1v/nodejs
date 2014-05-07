@@ -22,7 +22,6 @@ require 'mixlib/shellout'
 
 module NodejsCookbook
   class Helper
-
     # Create a new Helper object
     #
     # @param [Chef::node] The current Chef node
@@ -36,11 +35,6 @@ module NodejsCookbook
     # @return [String] The raw --version output from the command line
     def installed_version()
       version = '0.0.0'
-      if @node['platform'] == 'windows'
-        node_exe = ::File.join(@node['nodejs']['bin_dir'], 'node.exe')
-      else
-        node_exe = ::File.join(@node['nodejs']['bin_dir'], 'node')
-      end
       if ::File.exists?(node_exe)
         nodejs_cmd = Mixlib::ShellOut.new("\"#{node_exe}\" --version")
         nodejs_cmd.run_command
@@ -50,5 +44,15 @@ module NodejsCookbook
       version
     end
 
+    # Gets the full path the platform specific node executable
+    #
+    # @return [String] The full path to the node executable
+    def node_exe
+      if !@node_exe
+        @node_exe = ::File.join(@node['nodejs']['bin_dir'], 'node')
+        @node_exe ="#{node_exe}.exe" if @node['platform'] == 'windows'
+      end
+      @node_exe
+    end
   end
 end
