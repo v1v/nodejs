@@ -43,8 +43,8 @@ if platform?('windows')
   default['nodejs']['install_method'] = 'windows'
   default['nodejs']['dir'] = ::File.join('c:', 'Program Files', 'nodejs')
   default['nodejs']['bin_dir'] = node['nodejs']['dir']
-  default['nodejs']['options'] = "/Lime nodejs.log"
-  default['nodejs']['installer_timeout'] = "600"
+  default['nodejs']['options'] = '/Lime nodejs.log'
+  default['nodejs']['installer_timeout'] = 600
 else
   default['nodejs']['install_method'] = 'source'
   default['nodejs']['dir'] = '/usr/local'
